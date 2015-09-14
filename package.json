@@ -1,0 +1,14 @@
+{
+  "name": "Bloggg",
+  "description": "A simple blogging site.",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "~4.0.0",
+    "body-parser": "~1.13.3",
+    "ejs": "~1.0.0",
+    "mongoose": "~4.1.6",
+    "consolidate": "~0.13.1",
+    "mongojs": "~1.3.0"
+  }
+}

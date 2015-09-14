@@ -1,0 +1,33 @@
+<!DOCTYPE  html>
+<html>
+<head>
+    <title>Log in | Bloggg</title>
+    <meta name = "viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href = "css/bootstrap.min.css" rel="stylesheet" media = "screen" type = "text/css"/>
+    <link href = "css/booklist.css" rel="stylesheet" media = "screen" type = "text/css"/>
+    <link href = 'http://fonts.googleapis.com/css?family=Ropa+Sans|Bitter' rel='stylesheet' type='text/css'> 
+</head>
+
+<body>
+    <div class="header">Bloggg!</div>
+    <div class="container">
+        <div class="hero-unit">
+            <p>
+            <form enctype="application/x-www-form-urlencoded" action="/register" id="regform" method="POST">
+                <p>
+                    <input type="text" placeholder="Email" name="email"></input><br/>
+                    <input type="password" placeholder="Password" name="password"></input>
+                </p>
+                <p><button type="submit" onclick="document.getElementbById('loginform').submit();" href="javascript.void(0)" value="Submit">Log-in</button></p>
+                <p>Let's bloggg!<a href="/register">Sign-up!</a></p>
+            </form>
+            </p>
+        </div>
+    </div>
+    <div class="footer">
+		Bloggg. A micro-blogging site. Ima Balles
+	</div>
+    
+    <script src = "js/bootstrap.min.js"></script>
+</body>
+</html>
