@@ -1,4 +1,4 @@
-var db   = require('../js/mongoose.js');
+var db = require('../db/userdb.js');
 
 var addBlogger = function (req, res) {
     var userid   = (1e4*(Date.now()+Math.random())).toString(16);
@@ -14,7 +14,7 @@ var addBlogger = function (req, res) {
         
         msg = "Successfully created your account!";
         res.render('result.html', {msg:msg, user:saved.first_name});
-    })
+    });
 }
 
 var logBlogger = function (req, res, callback) {

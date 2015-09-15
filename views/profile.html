@@ -1,0 +1,41 @@
+<!DOCTYPE  html>
+<html>
+<head>
+    <title>Bloggg</title>
+    <meta name = "viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href = "css/bootstrap.min.css" rel="stylesheet" media = "screen" type = "text/css"/>
+    <link href = "css/booklist.css" rel="stylesheet" media = "screen" type = "text/css"/>
+    <link href = 'http://fonts.googleapis.com/css?family=Ropa+Sans|Bitter|Montserrat' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body>
+    <div class="heading">
+        <div id="title">Bloggg!</div>
+        <div id="user">Welcome, <%=user%> | <a href="/logout">Log-out</a></div>
+    </div>
+    
+    <div class="container">
+        <div id="menu">
+            <ul>
+                <li><a href="/newpost">Create a new Post</a></li>
+            </ul>
+        </div>
+        <div class="post_container">
+            <%for(var x=0; x<result.length; x++) {%>
+                <div class="span6">
+                    <div id="posttitle"><%=result[x].title%></div>
+                    <div id="postdate"><%=result[x].timestamp%></div>
+                    <div id="postbody"><%=result[x].body%></div>
+                </div>
+                <p><label><%=msg%></label></p>
+            <%}%>
+        </div>
+    </div>
+    <div class="footer">
+		Bloggg. A micro-blogging site. Ima Balles
+	</div>
+    
+    <script src = "js/bootstrap.min.js"></script>
+</body>
+</html>

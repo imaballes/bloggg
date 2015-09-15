@@ -1,7 +1,7 @@
 var bodyParser = require('body-parser');
 var session    = require('express-session');
-var blogapi       = require('../api/blogapi.js');
-var db         = require('../js/mongoose.js');
+var userApi    = require('../api/userapi.js');
+var postApi    = require('../api/postapi.js');
 
 module.exports = function(app) {  
     app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,7 +19,7 @@ module.exports = function(app) {
         if existing: redirect to homepage
         if !existing: redirect to index.html(login page)*/
     app.get('/login', function(req, res){
-        console.log("\n========= Welcome to Bloggg! =========");
+        console.log("\n========= Homepage =========");
         
         sesh = req.session; 
         
@@ -35,7 +35,7 @@ module.exports = function(app) {
         if existing: set session for user's email
         if !existing: err msg = "Email not found, sign-up to start blogging!"*/
     app.post('/login', function(req, res) {
-        blogapi.logBlogger(req, res, function(result){
+        userApi.logBlogger(req, res, function(result){
             res.render('index.html', {msg:result});
         });
     });
@@ -54,25 +54,45 @@ module.exports = function(app) {
     });
     
     app.post('/register', function(req, res) {
-        blogapi.addBlogger(req, res);
+        userApi.addBlogger(req, res);
     });
     
     /* ========== PROFILE ========== */
     app.get('/dashboard', function(req, res) {
-        console.log("SESSION USER: " + req.session.name);
-        res.render('profile.html', {user:req.session.name});
+        sesh = req.session; 
+        
+        if(sesh.email) {
+            console.log("SESSION USER: " + req.session.name);
+            var msg = '';
+            if (req.session.msg != undefined) {
+                msg = req.session.msg;
+            }
+            postApi.displayPost(req, res, function(msg, posts){
+                res.render('profile.html', {msg:msg, user:req.session.name, result:posts});
+            });
+        }
+        else {
+            res.redirect(301, '/login');
+        }
     });
     
     /* ========== LOGOUT ========== */
     app.get('/logout', function(req, res) {
         console.log("========= Logging out =========");
-        req.session.destroy(function(err) {
-            if(err) {
-                console.log(err);
-            }
-            else {
-                res.redirect('/login');
-            }
-        });
+        sesh = req.session; 
+        
+        if(sesh.email) {
+            req.session.destroy(function(err) {
+                if(err) {
+                    console.log(err);
+                }
+                else {
+                    res.redirect(301, '/login');
+                }
+            });
+        }
+        else {
+            res.redirect(301, '/login');
+        }
     });
 }

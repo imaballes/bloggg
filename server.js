@@ -3,7 +3,8 @@ var express    = require('express');
 var app        = express();
 
 // ========== ROUTES
-require('./routes/blog')(app);
+require('./routes/user')(app);
+require('./routes/post')(app);
 require('./routes/static')(app);
 
 // ========== RENDER CLIENTVIEW

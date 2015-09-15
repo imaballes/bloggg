@@ -1,0 +1,40 @@
+<!DOCTYPE  html>
+<html>
+<head>
+    <title>Bloggg</title>
+    <meta name = "viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href = "css/bootstrap.min.css" rel="stylesheet" media = "screen" type = "text/css"/>
+    <link href = "css/booklist.css" rel="stylesheet" media = "screen" type = "text/css"/>
+    <link href = 'http://fonts.googleapis.com/css?family=Ropa+Sans|Bitter|Montserrat' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body>
+    <div class="heading">
+        <div id="title">Bloggg!</div>
+        <div id="user">Welcome, <%=user%> | <a href="/logout">Log-out</a></div>
+    </div>
+    
+    <div class="container">
+        <div class="hero-unit">
+            <form enctype="application/x-www-form-urlencoded" action="/newpost" id="postform" method="POST">
+                <p>
+                    <label>Create new post</label>
+                    <p>
+                        <input type="text" placeholder="Title" name="title" id="title"></input><br/>
+                        <textarea name="body" id="body" placeholder="Your text here"></textarea>
+                    </p>
+                    <p>
+                        <button type="submit" onclick="document.getElementbById('postform').submit();" href="javascript.void(0)" value="Submit">Post</button>
+                    </p>
+                </p>
+            </form>   
+        </div>
+    </div>
+    <div class="footer">
+		Bloggg. A micro-blogging site. Ima Balles
+	</div>
+    
+    <script src = "js/bootstrap.min.js"></script>
+</body>
+</html>
