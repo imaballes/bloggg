@@ -14,10 +14,14 @@
         <div id="title">Bloggg!</div>
         <div id="user">Welcome, <%=user%> | <a href="/logout">Log-out</a></div>
     </div>
-    
+
+    <div id="nav">
+        <a href="/dashboard">Home</a>
+    </div>
+
     <div class="container">
         <div class="hero-unit">
-            <form enctype="application/x-www-form-urlencoded" action="/newpost" id="postform" method="POST">
+            <form enctype="application/x-www-form-urlencoded" action="/post" id="postform" method="POST">
                 <p>
                     <label>Create new post</label>
                     <p>

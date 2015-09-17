@@ -6,7 +6,7 @@ db.on('error', function (err) {
     console.log('Database connection error!', err);
 });
 db.once('open', function () {
-    console.log('========= Connected to userdb =========');
+    console.log('========= Connected to database =========\n');
 });
 
 var User = mongoose.model('User', {
@@ -39,7 +39,8 @@ var saveUser = function(users, callback) {
 // validate login
 var logUser = function(details, callback){
     var obj = {"email":details.email, "password":details.password};
-
+    console.log(obj);
+    
     User.findOne(obj, function(err, entry){
         console.log("+++++++++");
         console.log(entry);

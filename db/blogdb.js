@@ -6,7 +6,7 @@ db.on('error', function (err) {
     console.log('Database connection error!', err);
 });
 db.once('open', function () {
-    console.log('========= Connected to blogpost database =========\n');
+    console.log('========= Connected to postdb =========\n');
 });
 
 var Post = mongoose.model('Posts', {
@@ -36,20 +36,47 @@ var savePost = function(entry, callback) {
 // get all posts
 var getPosts = function(callback) {
     Post.find(function(err, posts){
-        console.log("+++++++++");
+        /*console.log("+++++++++");
         console.log(posts);
-        console.log("+++++++++");
+        console.log("+++++++++");*/
         
         if(err || posts == null) {
-            var callback_err = {msg:"Nothing to display", err:true};
-            callback(callback_err);
+            var callback_data = {msg:"Nothing to display", err:true};
+            callback(callback_data);
         }
         else {
-            console.log(posts);
+            //console.log(posts);
             callback(posts);
         }
     });
 }
 
-exports.savePost = savePost;
-exports.getPosts = getPosts;
+// delete post by id
+var removePost = function(id, callback) {
+    var entry = {_id:id};
+    console.log(entry);
+    
+    Post.findOne(entry, function(err, result){
+        if(err || !result){
+            callback_data = {msg:"Post not existing..", err:true};
+            callback(callback_data);
+        }
+        else{
+            console.log(result);
+            Post.remove(entry, function(err, deleted){       
+                if(err || !deleted) {
+                    callback_data = {msg:"Error deleting..", err:true};
+                    callback(callback_data);
+                }
+                else {
+                    callback_data = {msg:"ID: " + entry._id + ", deleted successfully!", err:false} 
+                    callback(callback_data);
+                }
+            });
+        }
+    });
+}
+
+exports.savePost   = savePost;
+exports.getPosts   = getPosts;
+exports.removePost = removePost;

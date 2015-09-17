@@ -18,26 +18,31 @@ var addBlogger = function (req, res) {
 }
 
 var logBlogger = function (req, res, callback) {
-    console.log("\n========= Checking Database =========\n");
-    db.logUser(req.body, function(result) {
-        console.log(result.msg);
-        
-        if(result.err == true) {
-            callback(result.msg);
-        }
-        else {
-            console.log("DB NAME: " + result.first_name);
+    console.log("========= Checking Database =========\n");
+    if(req.body.email == '' || req.body.password == ''){
+        callback("Please fill-up all fields.");
+    }
+    else {
+        db.logUser(req.body, function(result) {
+            console.log(result.msg);
             
-            console.log("\n========= Setting session =========\n");
-            
-            var sesh = req.session;       
-            sesh.email = req.body.email;
-            sesh.name  = result.first_name;
-            console.log(sesh);
-            
-            res.redirect(301, '/dashboard');
-        }
-    });
+            if(result.err == true) {
+                callback(result.msg);
+            }
+            else {
+                console.log("DB NAME: " + result.first_name);
+                
+                console.log("\n========= Setting session =========\n");
+                
+                var sesh = req.session;       
+                sesh.email = req.body.email;
+                sesh.name  = result.first_name;
+                console.log(sesh);
+                
+                res.redirect(301, '/dashboard');
+            }
+        });
+    }
 }
 
 exports.addBlogger = addBlogger;

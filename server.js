@@ -12,11 +12,10 @@ app.set('views',__dirname + '/views');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
-//MISC
 // ========== STATIC
 app.use(express.static('static'));
 
 // ========== BINDER
 app.listen(8008, function(result){
-    console.log("Listening on port 8008!");
+    console.log("Listening on port 8008!\n");
 });

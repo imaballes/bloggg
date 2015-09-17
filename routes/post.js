@@ -6,7 +6,7 @@ module.exports = function(app) {
     /* ========== PROFILE ========== */
     var sesh;
     
-    app.get('/newpost', function(req, res) {
+    app.get('/post', function(req, res) {
         sesh = req.session; 
         
         if(sesh.email) {
@@ -17,10 +17,21 @@ module.exports = function(app) {
         }
     });
     
-    app.post('/newpost', function(req, res) {
+    app.post('/post', function(req, res) {
         postApi.addPost(req, res);
     });
     
-    //app.put
-    //app.delete
+    app.delete('/post/:id', function(req, res) {
+        console.log("\nROUTE: " + req.route.path);
+        postApi.deletePost(req, res, function(msg, posts){
+            res.render('profile.html', {msg:msg, user:req.session.name, result:posts});
+        });
+    });
+    
+    app.put('/post/:id', function(req, res) {
+        console.log("route: updating.... " + req.route.path);
+        postApi.deletePost(req, res, function(msg, posts){
+            res.render('profile.html', {msg:msg, user:req.session.name, result:posts});
+        });
+    });
 }

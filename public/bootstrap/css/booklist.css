@@ -17,7 +17,9 @@ a:hover {
     text-align:center;
     color:blue;
 }
-
+ ul {
+    margin: 0px;
+ }
 button {
     text-decoration:none;
     padding:10px;
@@ -116,7 +118,7 @@ label {
 .post_container {
     position:relative;
     margin:auto;
-    width:600px;
+    width:630px;
     font-family: 'Bitter', serif;
 }
 
@@ -124,9 +126,28 @@ label {
     background-color: #eee;
     padding:15px;
     border-radius:5px;
-    margin:10px 5px 10px 0px;
-    width:600px;
-    
+    margin:10px 5px 3px 0px;
+    width:600px;    
+}
+.editbutton, .deletebutton {
+    text-decoration:none;
+    padding:3px;
+    background-color:#fff;
+    border: 1px solid #2A897B;
+    color:#2A897B;
+    text-align:center;
+    width:60px;
+    font-size:14px;
+    border-radius:0px;
+    -webkit-transition: .30s ease-in-out;
+    right:0px;
+}
+.editbutton:hover, .deletebutton:hover {
+    text-decoration:none;
+    text-align:center;
+    background-color: #9CCBC4;
+    border: 1px solid #fff;
+    color:#000;
 }
 
 .footer{
@@ -141,12 +162,32 @@ label {
 }
 
 /* IDS */
+#nav {
+    font-family: 'Bitter', serif;
+    float:left;
+    margin-left:10px;
+    margin-top:7px;
+}
+
+#nav a{
+    padding:8px;
+    text-align:center;
+    background-color:#2a897b;
+    color:#fff;
+    -webkit-transition: .80s ease-in-out;
+}
+
+#nav a:hover{
+    text-align:center;
+    background-color:#fff;
+    color:#2A897B;
+}
+
 #menu {
     margin-top:6px;
     margin-right:20px;
     list-style-type:none;
     font-family: 'Bitter', serif;
-    
 }
 
 #menu ul {
@@ -167,12 +208,14 @@ label {
     background-color: #2A897B;
     color: #fff;
     display:list-item;
+    border:1px solid #fff;
+    -webkit-transition: .30s ease-in-out;
 }
 
 #menu li a:hover {
     background-color: #fff;
     color: #2A897B;
-    -webkit-transition: .60s ease-in-out;
+    border:1px solid #2A897B;
 }
 
 #posttitle {
@@ -194,7 +237,7 @@ label {
     font-size:10px;
     text-align:right;
     list-style-type:none;
-    border-top:1px solid #eee;
+    width:630px;
 }
 
 #interact li {

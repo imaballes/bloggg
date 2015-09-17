@@ -6,7 +6,45 @@
     <link href = "css/bootstrap.min.css" rel="stylesheet" media = "screen" type = "text/css"/>
     <link href = "css/booklist.css" rel="stylesheet" media = "screen" type = "text/css"/>
     <link href = 'http://fonts.googleapis.com/css?family=Ropa+Sans|Bitter|Montserrat' rel='stylesheet' type='text/css'>
-
+    <script src = "/jquery-1.11.3.min.js"></script>
+    <script>
+        $(document).ready(function() {            
+            $(".editbutton").click(function(){
+                var id = ($(this).attr('postid'));
+                alert(id);
+                
+                // ===== ajax to put
+                $.ajax({
+                    url: '/post/' + id,
+                    type: 'PUT',
+                    contentType:'application/json',
+                    data: JSON.stringify({id:id}),
+                }).done(function(msg){
+                    alert("Successfullu updated entry ID..." + id);
+                }).fail(function(xhr, status, err){
+                    alert(status);
+                });
+            });
+            
+            $(".deletebutton").click(function(){
+                var id = ($(this).attr('postid'));
+                alert(id);
+                
+                // ===== ajax to delete
+                $.ajax({
+                    url: '/post/' + id,
+                    type: 'DELETE',
+                    contentType:'application/json',
+                    data: JSON.stringify({id:id}),
+                }).done(function(msg){
+                    alert("Successfully deleted entry ID: " + id);
+                    //windows redirect);
+                }).fail(function(xhr, status, err){
+                    alert(status);
+                });
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -18,17 +56,24 @@
     <div class="container">
         <div id="menu">
             <ul>
-                <li><a href="/newpost">Create a new Post</a></li>
+                <li><a href="/post">Create a new Post</a></li>
             </ul>
         </div>
         <div class="post_container">
+            <p><label><%=msg%></label></p>
             <%for(var x=0; x<result.length; x++) {%>
                 <div class="span6">
                     <div id="posttitle"><%=result[x].title%></div>
                     <div id="postdate"><%=result[x].timestamp%></div>
                     <div id="postbody"><%=result[x].body%></div>
                 </div>
-                <p><label><%=msg%></label></p>
+                <p>
+                    <ul id="interact">
+                        <li><button class = "editbutton" type="submit" postid="<%=result[x]._id%>" >Edit</button></li>
+                        <li><button class = "deletebutton" type="submit" postid="<%=result[x]._id%>">Delete</button></li>
+                    </ul>
+                   
+                </p>
             <%}%>
         </div>
     </div>

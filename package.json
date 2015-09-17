@@ -10,6 +10,7 @@
     "mongoose": "~4.1.6",
     "consolidate": "~0.13.1",
     "mongojs": "~1.3.0",
-    "express-session": "^1.7.6"
+    "express-session": "^1.7.6",
+    "express-method-override": "0.0.3"
   }
 }

@@ -26,22 +26,17 @@ var displayPost = function(req, res, callback) {
             callback(msg, result);
         }
     });
-    
-    /*var render = function(posts){
-        //res.render('profile.html', {msg:'', user:req.session.name, result:posts});
-        callback(posts);
-    }
-
-    var result = {};
-    db.find(function(err, posts) {
-        if(err) {
-            console.log(err);
-        }
-        else {
-            result = posts;
-            render(result);
-        }
-    });*/
 }
-exports.addPost  = addPost;
+
+var deletePost = function(req, res, callback) {
+    console.log('Deleting post by id: ' + req.params.id);
+   
+    db.removePost(req.params.id, function(result){
+        console.log(result.msg);
+        callback(result.msg, {});
+    });
+}
+
+exports.addPost     = addPost;
 exports.displayPost = displayPost;
+exports.deletePost  = deletePost;
