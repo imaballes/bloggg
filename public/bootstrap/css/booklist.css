@@ -40,6 +40,18 @@ button:hover {
     color:#2A897B;
 }
 
+.savebutton, .cancelbutton {
+    text-decoration:none;
+    padding:10px;
+    background-color: #2A897B;
+    color:#fff;
+    text-align:center;
+    border: 1px solid #fff;
+    width:100px;
+    font-size:16px;
+    border-radius:5px
+}
+
 p {
     width:400px;
     text-align:justify;
@@ -73,6 +85,7 @@ label {
     padding: 10px 5px 30px 5px;
     background-color:#2A897B;
     color:#fff;
+    margin-bottom:6px;
 }
 .heading #title{
     float:left;
@@ -166,15 +179,18 @@ label {
     font-family: 'Bitter', serif;
     float:left;
     margin-left:10px;
-    margin-top:7px;
+    font-size:12px;
+    line-height: 20px;
+    margin-top:1px;
 }
 
 #nav a{
-    padding:8px;
+    padding:10px;
     text-align:center;
     background-color:#2a897b;
     color:#fff;
     -webkit-transition: .80s ease-in-out;
+    line-height: 20px;
 }
 
 #nav a:hover{
@@ -184,10 +200,10 @@ label {
 }
 
 #menu {
-    margin-top:6px;
-    margin-right:20px;
+    margin-right:15px;
     list-style-type:none;
     font-family: 'Bitter', serif;
+    float:right;
 }
 
 #menu ul {
@@ -209,10 +225,29 @@ label {
     color: #fff;
     display:list-item;
     border:1px solid #fff;
-    -webkit-transition: .30s ease-in-out;
+    -webkit-transition: .80s ease-in-out;
 }
 
 #menu li a:hover {
+    background-color: #fff;
+    color: #2A897B;
+    border:1px solid #2A897B;
+}
+
+#menu .editprofile {
+    text-decoration: none;
+    padding:8px;
+    background-color: #2A897B;
+    color: #fff;
+    display:list-item;
+    border:1px solid #fff;
+    -webkit-transition: .80s ease-in-out;
+    width:100px;
+    border-radius:0px;
+    font-size:12px;
+    font-family: 'Bitter', serif;
+}
+#menu .editprofile:hover {
     background-color: #fff;
     color: #2A897B;
     border:1px solid #2A897B;
@@ -230,6 +265,11 @@ label {
 #postbody {
     color:#000;
     font-size:14px;
+    text-align:justify;
+}
+#postauthor{
+    color:#000;
+    font-size:12px;
     text-align:justify;
 }
 

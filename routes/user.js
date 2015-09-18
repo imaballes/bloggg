@@ -14,9 +14,12 @@ module.exports = function(app) {
     }));
     
     var sesh;
+    app.get('/', function(req, res){        
+        res.redirect(301, '/login');
+    });
     
     /* ==================================================
-        LOGIN
+        ** LOGIN
         set session
         check existence of session (email)
         if existing: redirect to homepage
@@ -26,6 +29,7 @@ module.exports = function(app) {
         sesh = req.session; 
         if(sesh.email) {
             console.log("You are still logged-in");
+            res.render('profile.html', {msg:'', user:req.session.name, result:''});
         }
         else {
             res.render('index.html', {msg:''});
@@ -44,7 +48,7 @@ module.exports = function(app) {
     });
 
     /* ==================================================
-        REGISTRATION
+        ** REGISTRATION
         set session
         check existence of session (email)
         if existing: redirect to homepage
@@ -72,7 +76,7 @@ module.exports = function(app) {
     });
     
     /* ==================================================
-        DASHBOARD
+        ** DASHBOARD (VIEW ALL POSTS)
         set session
         check existence of session (email)
         if existing: redirect to homepage
@@ -86,8 +90,16 @@ module.exports = function(app) {
             if (req.session.msg != undefined) {
                 msg = req.session.msg;
             }
-            postApi.displayPost(req, res, function(msg, posts){
-                res.render('profile.html', {msg:msg, user:req.session.name, result:posts});
+            postApi.displayPosts(req, res, function(msg, posts){
+                var user_details = {
+                    id:sesh._id,
+                    first_name:sesh.first_name,
+                    last_name:sesh.last_name,
+                    email:sesh.email,
+                    password:sesh.password,
+                };
+                
+                res.render('profile.html', {msg:msg, user:user_details, result:posts});
             });
         }
         else {
@@ -96,7 +108,37 @@ module.exports = function(app) {
     });
     
     /* ==================================================
-        LOGOUT
+        ** EDIT PROFILE
+        set session
+        check existence of session (email)
+        if existing: redirect to homepage
+        if !existing: redirect to regform.html(registration page)
+    ==================================================== */
+    app.get('/user/:id/edit', function(req, res) {
+        sesh = req.session;
+        if(sesh.email) {
+            var user_details = {
+                _id:sesh._id,
+                first_name:sesh.first_name,
+                last_name:sesh.last_name,
+                email:sesh.email,
+                password:sesh.password
+            };
+            res.render('update_profile.html', {user: user_details})
+        }
+        else {
+            res.redirect(301, '/login');
+        }
+    })
+    
+    app.put('/user/:id', function(req, res) {               
+        userApi.editBlogger(req, res, function(result){
+            res.send(result);
+        });
+    });
+    
+    /* ==================================================
+        ** LOGOUT
         set session
         check existence of session (email)
         if existing: destroy user's session (email) - redirect to login page

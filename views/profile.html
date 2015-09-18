@@ -9,38 +9,33 @@
     <script src = "/jquery-1.11.3.min.js"></script>
     <script>
         $(document).ready(function() {            
+            $(".editprofile").click(function(){
+                var id = ($(this).attr('userid'));
+                window.location.href= "/user/"+ id + "/edit";
+            });
+            
             $(".editbutton").click(function(){
                 var id = ($(this).attr('postid'));
-                alert(id);
-                
-                // ===== ajax to put
-                $.ajax({
-                    url: '/post/' + id,
-                    type: 'PUT',
-                    contentType:'application/json',
-                    data: JSON.stringify({id:id}),
-                }).done(function(msg){
-                    alert("Successfullu updated entry ID..." + id);
-                }).fail(function(xhr, status, err){
-                    alert(status);
-                });
+                window.location.href= "/post/"+ id + "/edit";
             });
             
             $(".deletebutton").click(function(){
                 var id = ($(this).attr('postid'));
-                alert(id);
                 
                 // ===== ajax to delete
                 $.ajax({
                     url: '/post/' + id,
                     type: 'DELETE',
                     contentType:'application/json',
-                    data: JSON.stringify({id:id}),
+                    data: JSON.stringify({id:id})
                 }).done(function(msg){
-                    alert("Successfully deleted entry ID: " + id);
-                    //windows redirect);
+                    alert("Successfully deleted post!");
+                    $( "#displayhere" ).append( "<p><strong>Successfully deleted post!</strong></p>" );
+                    location.reload();
                 }).fail(function(xhr, status, err){
-                    alert(status);
+                    alert("Status:" + status + " Error: " + err);
+                    alert("Err: " + xhr.responseText);
+                    window.location.href= "/error";
                 });
             });
         });
@@ -50,28 +45,36 @@
 <body>
     <div class="heading">
         <div id="title">Bloggg!</div>
-        <div id="user">Welcome, <%=user%> | <a href="/logout">Log-out</a></div>
+        <div id="user">Welcome, <%=user.first_name%> | <a href="/logout">Log-out</a></div>
     </div>
-    
+    <div id="nav">
+        <a href="/dashboard">Home</a>
+        <a href="/post">Add Post</a>
+    </div>
+    <div id="menu">
+        <ul>
+            <li><button class="editprofile" type="submit" userid="<%=user.id%>">Update Profile</button></li>
+        </ul>
+    </div>
     <div class="container">
-        <div id="menu">
-            <ul>
-                <li><a href="/post">Create a new Post</a></li>
-            </ul>
-        </div>
+        <div id="displayhere"></div>
         <div class="post_container">
             <p><label><%=msg%></label></p>
             <%for(var x=0; x<result.length; x++) {%>
+                
                 <div class="span6">
                     <div id="posttitle"><%=result[x].title%></div>
+                    <div id="postauthor">by: <%=result[x].author%></div>
                     <div id="postdate"><%=result[x].timestamp%></div>
                     <div id="postbody"><%=result[x].body%></div>
                 </div>
                 <p>
+                    <%if(user.id == result[x].userid){%>
                     <ul id="interact">
-                        <li><button class = "editbutton" type="submit" postid="<%=result[x]._id%>" >Edit</button></li>
+                        <li><button class = "editbutton" type="submit" postid="<%=result[x]._id%>">Edit</button></li>
                         <li><button class = "deletebutton" type="submit" postid="<%=result[x]._id%>">Delete</button></li>
                     </ul>
+                    <%}%>
                    
                 </p>
             <%}%>

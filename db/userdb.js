@@ -56,5 +56,20 @@ var logUser = function(details, callback){
     });
 }
 
-exports.saveUser = saveUser;
-exports.logUser  = logUser;
+// update profile
+var updateUser = function(query, params, callback) {
+    User.update(query, params, function(err, result){
+        if(err || !result) {
+            callback_data = {msg:"Error updating profile..", err:true};
+            callback(callback_data);
+        }
+        else {
+            callback_data = {msg:"Profile updated successfully!", err:true};
+            callback(result);
+        }
+    });
+}
+
+exports.saveUser   = saveUser;
+exports.logUser    = logUser;
+exports.updateUser = updateUser;

@@ -13,6 +13,8 @@ var Post = mongoose.model('Posts', {
     _id        : {type:String, unique:true},
     title      : String,
     body       : String,
+    author     : String,
+    userid     : String,
     timestamp  : {type:Date, default:Date.now}
 });
 
@@ -21,7 +23,9 @@ var savePost = function(entry, callback) {
     var MyPost = new Post({
             _id        : entry._id,
             title      : entry.title,
-            body       : entry.body
+            body       : entry.body,
+            author     : entry.author,
+            userid     : entry.userid
         });
     
     MyPost.save(function(err, saved) {
@@ -35,17 +39,29 @@ var savePost = function(entry, callback) {
 
 // get all posts
 var getPosts = function(callback) {
-    Post.find(function(err, posts){
-        /*console.log("+++++++++");
-        console.log(posts);
-        console.log("+++++++++");*/
-        
+    Post.find(function(err, posts){        
         if(err || posts == null) {
             var callback_data = {msg:"Nothing to display", err:true};
             callback(callback_data);
         }
         else {
-            //console.log(posts);
+            callback(posts);
+        }
+    });
+}
+
+// get post by id
+var getPost = function(id, callback) {
+    var entry = {_id:id};
+    console.log(entry);
+    
+    Post.findOne(entry, function(err, posts){        
+        if(err || !posts) {
+            var callback_data = {msg:"Post not existing..", err:true};
+            callback(callback_data);
+        }
+        else {
+            console.log(posts);
             callback(posts);
         }
     });
@@ -69,7 +85,7 @@ var removePost = function(id, callback) {
                     callback(callback_data);
                 }
                 else {
-                    callback_data = {msg:"ID: " + entry._id + ", deleted successfully!", err:false} 
+                    callback_data = {msg:"ID: " + entry._id + ", deleted successfully!", err:false}; 
                     callback(callback_data);
                 }
             });
@@ -77,6 +93,22 @@ var removePost = function(id, callback) {
     });
 }
 
-exports.savePost   = savePost;
+// update post by id
+var updatePost = function(query, params, callback) {
+    Post.update(query, params, function(err, result){
+        if(err || !result){
+            callback_data = {msg:"Error updating post..", err:true};
+            callback(callback_data);
+        }
+        else {
+            callback_data = {msg:"ID: " + params._id + ", updated successfully!", err:true};
+            callback(result);
+        }
+    });
+}
+
 exports.getPosts   = getPosts;
+exports.getPost    = getPost;
+exports.savePost   = savePost;
 exports.removePost = removePost;
+exports.updatePost = updatePost;
