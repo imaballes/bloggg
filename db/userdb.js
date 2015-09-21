@@ -8,11 +8,10 @@ db.on('error', function (err) {
 db.once('open', function () {
     console.log('========= Connected to userdb =========');
 });
-
 var User = mongoose.model('User', {
     _id        : {type:String, unique:true},
-    email      : {type:String, unique:true},
-    password   : String,
+    email      : {type:String, unique:true, required:true},
+    password   : {type:String, required:true},
     first_name : String,
     last_name  : String
 });
@@ -29,10 +28,20 @@ var saveUser = function(users, callback) {
     
     MyUser.save(function(err, saved) {
         if(err) {
-            console.log(err);
-            process.exit();
+            console.log(err.errmsg);
+            
+            var msg = err.errmsg;
+            
+            //duplicate key
+            if(err.code='11000') {
+                msg = "Email is already in use. Please try a different email.";
+            }
+            var callback_err = {err:true, msg:msg};
+            callback(callback_err);
         }
-        callback(saved);
+        else {
+            callback(saved);
+        }
     });
 }
 
@@ -50,7 +59,6 @@ var logUser = function(details, callback){
             callback(callback_err);
         }
         else {
-            console.log(entry);
             callback(entry);
         }
     });
@@ -60,11 +68,11 @@ var logUser = function(details, callback){
 var updateUser = function(query, params, callback) {
     User.update(query, params, function(err, result){
         if(err || !result) {
-            callback_data = {msg:"Error updating profile..", err:true};
-            callback(callback_data);
+            callback_err = {msg:"Error updating profile..", err:true};
+            callback(callback_err);
         }
         else {
-            callback_data = {msg:"Profile updated successfully!", err:true};
+            callback_data = {msg:"Profile updated successfully!"};
             callback(result);
         }
     });

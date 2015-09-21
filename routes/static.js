@@ -16,8 +16,8 @@ module.exports = function(app) {
                 res.end(css);
         });
     })
-    app.get('/css/booklist.css', function(req, res){
-        cons.swig("public/bootstrap/css/booklist.css", {},
+    app.get('/css/bloggg.css', function(req, res){
+        cons.swig("public/bootstrap/css/bloggg.css", {},
             function(err, mystyle) {
                 res.writeHead(200, {"Content-Type":"text/css"});
                 res.end(mystyle);
@@ -47,8 +47,8 @@ module.exports = function(app) {
                 res.end(css);
         });
     })
-    app.get('/register/css/booklist.css', function(req, res){
-        cons.swig("public/bootstrap/css/booklist.css", {},
+    app.get('/register/css/bloggg.css', function(req, res){
+        cons.swig("public/bootstrap/css/bloggg.css", {},
             function(err, mystyle) {
                 res.writeHead(200, {"Content-Type":"text/css"});
                 res.end(mystyle);
@@ -77,8 +77,8 @@ module.exports = function(app) {
                 res.end(css);
         });
     })
-    app.get('/dashboard/css/booklist.css', function(req, res){
-        cons.swig("public/bootstrap/css/booklist.css", {},
+    app.get('/dashboard/css/bloggg.css', function(req, res){
+        cons.swig("public/bootstrap/css/bloggg.css", {},
             function(err, mystyle) {
                 res.writeHead(200, {"Content-Type":"text/css"});
                 res.end(mystyle);
@@ -107,8 +107,8 @@ module.exports = function(app) {
                 res.end(css);
         });
     })
-    app.get('/post/:id/css/booklist.css', function(req, res){
-        cons.swig("public/bootstrap/css/booklist.css", {},
+    app.get('/post/:id/css/bloggg.css', function(req, res){
+        cons.swig("public/bootstrap/css/bloggg.css", {},
             function(err, mystyle) {
                 res.writeHead(200, {"Content-Type":"text/css"});
                 res.end(mystyle);
@@ -137,8 +137,8 @@ module.exports = function(app) {
                 res.end(css);
         });
     })
-    app.get('/user/:id/css/booklist.css', function(req, res){
-        cons.swig("public/bootstrap/css/booklist.css", {},
+    app.get('/user/:id/css/bloggg.css', function(req, res){
+        cons.swig("public/bootstrap/css/bloggg.css", {},
             function(err, mystyle) {
                 res.writeHead(200, {"Content-Type":"text/css"});
                 res.end(mystyle);

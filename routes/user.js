@@ -5,8 +5,6 @@ var postApi    = require('../api/postapi.js');
 
 module.exports = function(app) {  
     app.use(bodyParser.urlencoded({ extended: false }));
-    app.use(require('express-method-override')('method_override_param_name'));
-    
     app.use(session({
         secret: 'ssshhhhh',
         resave: true,
@@ -48,7 +46,7 @@ module.exports = function(app) {
     });
 
     /* ==================================================
-        ** REGISTRATION
+        GET:  REGISTRATION
         set session
         check existence of session (email)
         if existing: redirect to homepage
@@ -62,17 +60,21 @@ module.exports = function(app) {
         }
         else {
             console.log(":: Registration ::");
-            res.render('regform.html');
+            res.render('regform.html', {msg:''});
         }
     });
     
     /* ==================================================  
+        POST: REGISTRATION
         check existence of email and pw on database
         if existing: set session for user's email
         if !existing: err msg = "Email not found, sign-up to start blogging!"
     ==================================================== */
     app.post('/register', function(req, res) {
-        userApi.addBlogger(req, res);
+        var msg = '';
+        userApi.addBlogger(req, res, function(result){
+            res.render(result.redirect, {msg:result.msg, user:result.user});
+        });
     });
     
     /* ==================================================
@@ -108,7 +110,7 @@ module.exports = function(app) {
     });
     
     /* ==================================================
-        ** EDIT PROFILE
+        GET: EDIT PROFILE
         set session
         check existence of session (email)
         if existing: redirect to homepage
@@ -118,7 +120,7 @@ module.exports = function(app) {
         sesh = req.session;
         if(sesh.email) {
             var user_details = {
-                _id:sesh._id,
+                id:sesh._id,
                 first_name:sesh.first_name,
                 last_name:sesh.last_name,
                 email:sesh.email,
@@ -131,6 +133,9 @@ module.exports = function(app) {
         }
     })
     
+    /* ==================================================
+        PUT: EDIT PROFILE
+    ==================================================== */
     app.put('/user/:id', function(req, res) {               
         userApi.editBlogger(req, res, function(result){
             res.send(result);

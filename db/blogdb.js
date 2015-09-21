@@ -8,10 +8,10 @@ db.on('error', function (err) {
 db.once('open', function () {
     console.log('========= Connected to postdb =========\n');
 });
-
+var mongoose = require('mongoose');
 var Post = mongoose.model('Posts', {
     _id        : {type:String, unique:true},
-    title      : String,
+    title      : {type:String, required:true},
     body       : String,
     author     : String,
     userid     : String,
@@ -61,8 +61,28 @@ var getPost = function(id, callback) {
             callback(callback_data);
         }
         else {
+            console.log("GET POST-----\n");
             console.log(posts);
+            console.log("END GET POST-----\n");
             callback(posts);
+        }
+    });
+}
+
+// update post by id
+var updatePost = function(query, params, callback) {
+    var timestamp = {timestamp:new Date()};
+    params.timestamp;
+    console.log("\n===blogdb===\n");
+    console.log(params);
+    Post.update(query, params, function(err, result){
+        if(err || !result){
+            callback_data = {msg:"Error updating post.."};
+            callback(callback_data);
+        }
+        else {
+            callback_data = {msg:"ID: " + params._id + ", updated successfully!"};
+            callback(callback_data);
         }
     });
 }
@@ -93,22 +113,8 @@ var removePost = function(id, callback) {
     });
 }
 
-// update post by id
-var updatePost = function(query, params, callback) {
-    Post.update(query, params, function(err, result){
-        if(err || !result){
-            callback_data = {msg:"Error updating post..", err:true};
-            callback(callback_data);
-        }
-        else {
-            callback_data = {msg:"ID: " + params._id + ", updated successfully!", err:true};
-            callback(result);
-        }
-    });
-}
-
 exports.getPosts   = getPosts;
 exports.getPost    = getPost;
 exports.savePost   = savePost;
-exports.removePost = removePost;
 exports.updatePost = updatePost;
+exports.removePost = removePost;

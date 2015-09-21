@@ -45,15 +45,6 @@ var addPost = function (req, res) {
     });
 }
 
-var deletePost = function(req, res, callback) {
-    console.log('Deleting post by id: ' + req.params.id);
-   
-    db.removePost(req.params.id, function(result){
-        console.log(result.msg);
-        callback(result.msg);
-    });
-}
-
 var editPost = function(req, res, callback) {
     console.log('Updating post by id: ' + req.params.id);
     var params = req.query; // contains - title & body
@@ -63,18 +54,22 @@ var editPost = function(req, res, callback) {
     console.log(query);
     
     db.updatePost(query, params, function(result){
-        if(result.err==true) {
-            console.log(result.msg);
-        }
-        else {
-            console.log(result.msg);
-            callback(result.msg);
-        }
+        console.log(result.msg);
+        callback(result.msg);
+    });
+}
+
+var deletePost = function(req, res, callback) {
+    console.log('Deleting post by id: ' + req.params.id);
+   
+    db.removePost(req.params.id, function(result){
+        console.log(result.msg);
+        callback(result.msg);
     });
 }
 
 exports.displayPosts = displayPosts;
 exports.displayPost  = displayPost;
 exports.addPost      = addPost;
-exports.deletePost   = deletePost;
 exports.editPost     = editPost;
+exports.deletePost   = deletePost;

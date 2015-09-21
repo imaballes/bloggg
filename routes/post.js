@@ -1,5 +1,5 @@
-var bodyParser = require('body-parser');
-var session    = require('express-session');
+/*var bodyParser = require('body-parser');
+var session    = require('express-session');*/
 var postApi    = require('../api/postapi.js');
 
 module.exports = function(app) {
@@ -16,7 +16,11 @@ module.exports = function(app) {
         sesh = req.session; 
         
         if(sesh.email) {
-            res.render('newpost.html', {user:sesh.first_name});
+            var user_details = {
+                id:sesh._id,
+                first_name:sesh.first_name
+            };
+            res.render('newpost.html', {user:user_details});
         }
         else {
             res.redirect(301, '/login');
@@ -35,16 +39,32 @@ module.exports = function(app) {
         postApi.addPost(req, res);
     });
     
+    /* ==================================================
+        ** GET POST FOR EDIT
+        query using blogpost ID from req parameters
+        render pre-populated edit form using query result
+    ==================================================== */
     // API by :id
     app.get('/post/:id/edit', function(req, res) {
         sesh = req.session;
         postApi.displayPost(req, res, function(msg, data){
-            console.log("displayPost");
+            console.log("\nROUTE: /post/:id/edit --- FUNC: displayPost\n");
             console.log(data);
-            res.render('editpost.html', {user:sesh.first_name, result:data});
+            console.log("END ROUTE-----\n");
+            var user_details = {
+                id:sesh._id,
+                first_name:sesh.first_name
+            };
+            res.render('editpost.html', {user:user_details, result:data});
         });
     });
     
+    /* ==================================================
+        ** EDIT POST
+        called by editpost.html via AJAX - PUT
+        query update fields
+        on success display success msg & redirect to dashboard
+    ==================================================== */
     app.put('/post/:id', function(req, res) {
         postApi.editPost(req, res, function(result){
             res.send(result);
@@ -55,5 +75,9 @@ module.exports = function(app) {
         postApi.deletePost(req, res, function(result){
             res.send(result);
         });
+    });
+    
+    app.get('/error', function(req, res){
+        res.render('error.html');
     });
 }

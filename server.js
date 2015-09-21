@@ -1,18 +1,16 @@
 // ========== PACKAGES
-var express    = require('express');
-var app        = express();
+var express = require('express');
+var app     = express();
 
 // ========== ROUTES
 require('./routes/user')(app);
 require('./routes/post')(app);
 require('./routes/static')(app);
 
-// ========== RENDER CLIENTVIEW
+// ========== VIEW ENGINE SETUP
 app.set('views',__dirname + '/views');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
-
-// ========== STATIC
 app.use(express.static('static'));
 
 // ========== BINDER

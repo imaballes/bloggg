@@ -1,20 +1,64 @@
 var db = require('../db/userdb.js');
+var dns = require('dns');
 
-var addBlogger = function (req, res) {
-    var userid   = (1e4*(Date.now()+Math.random())).toString(16);
+var addBlogger = function (req, res, callback) {
     var details  = req.body;
-    var msg;
-    
-    details._id  = userid; //add id to details
-    console.log(details);
-    
-    db.saveUser(details, function(saved) {
-        console.log("\n========== Successful Insert =========");
-        console.log(saved);
+    var result;
+    var validation_msg;
         
-        msg = "Successfully created your account!";
-        res.render('result.html', {msg:msg, user:saved.first_name});
-    });
+    // incomplete reg details
+    if(details.email == '' || details.password == '' || details.first_name == '' || details.last_name =='') {
+        result = {redirect:'regform.html', msg:"All fields are required.", user:''};
+        callback(result);
+    }
+    else {
+        // validate email
+        var splitEmail = details.email.split("@");
+        dns.resolveMx(splitEmail[1], function(err, data){
+            if(err) {
+                result = {redirect:'regform.html', msg:"Invalid email. Please use a valid email.", user:''};
+                callback(result);
+            }
+            else {
+                console.log("[SUCCESS] Email is valid: " + details.email);
+                var userid   = (1e4*(Date.now()+Math.random())).toString(16);
+            
+                details._id  = userid; //add id to details
+                console.log(details);
+                
+                db.saveUser(details, function(result) {
+                    console.log("\n========== Duplicate Key (Email) =========");
+                    if(result.err==true){
+                        result = {redirect:'regform.html', msg:result.msg, user:''};
+                    }
+                    else {
+                        console.log("\n========== Successful Insert =========");
+                        result = {redirect:'result.html', msg:"Successfully created your account!", user:result.first_name};
+                    }
+                    callback(result);
+                });
+            }
+        });
+    }
+    
+    /*else {
+        var userid   = (1e4*(Date.now()+Math.random())).toString(16);
+        
+        details._id  = userid; //add id to details
+        console.log(details);
+        
+        db.saveUser(details, function(result) {
+            console.log("\n========== Duplicate Key (Email) =========");
+            if(result.err==true){
+                result = {redirect:'regform.html', msg:result.msg, user:''};
+            }
+            else {
+                console.log("\n========== Successful Insert =========");
+                result = {redirect:'result.html', msg:"Successfully created your account!", user:result.first_name};
+            }
+            callback(result);
+        });
+    }*/
 }
 
 var logBlogger = function (req, res, callback) {
