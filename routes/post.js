@@ -1,12 +1,10 @@
-/*var bodyParser = require('body-parser');
-var session    = require('express-session');*/
 var postApi    = require('../api/postapi.js');
 
 module.exports = function(app) {
     var sesh;
     
     /* ==================================================
-        ** /POST
+        GET: ADD NEW BLOGPOST
         set session
         check existence of session (email)
         if existing: redirect to create post page
@@ -28,7 +26,7 @@ module.exports = function(app) {
     });
     
     /* ==================================================
-        ** ADD NEW POST
+        POST: ADD NEW BLOGPOST
         user must be logged-in to access form
         user enters title and post body
         user hits POST button
@@ -40,7 +38,7 @@ module.exports = function(app) {
     });
     
     /* ==================================================
-        ** GET POST FOR EDIT
+        GET: BLOGPOST TO EDIT
         query using blogpost ID from req parameters
         render pre-populated edit form using query result
     ==================================================== */
@@ -60,7 +58,7 @@ module.exports = function(app) {
     });
     
     /* ==================================================
-        ** EDIT POST
+        PUT: EDIT POST BY ID
         called by editpost.html via AJAX - PUT
         query update fields
         on success display success msg & redirect to dashboard
@@ -71,6 +69,9 @@ module.exports = function(app) {
         });
     });
     
+    /* ==================================================
+        DELETE: REMOVE POST BY ID
+    ==================================================== */
     app.delete('/post/:id', function(req, res) {
         postApi.deletePost(req, res, function(result){
             res.send(result);
@@ -78,6 +79,13 @@ module.exports = function(app) {
     });
     
     app.get('/error', function(req, res){
-        res.render('error.html');
+        sesh = req.session;
+        
+        if(sesh.email) {
+            res.render('error.html');
+        }
+        else {
+            res.redirect(301, '/login');
+        }
     });
 }

@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/bloggg');
 var db = mongoose.connection;
- 
+
 db.on('error', function (err) {
     console.log('Database connection error!', err);
 });

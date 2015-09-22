@@ -27,8 +27,8 @@ var addBlogger = function (req, res, callback) {
                 console.log(details);
                 
                 db.saveUser(details, function(result) {
-                    console.log("\n========== Duplicate Key (Email) =========");
                     if(result.err==true){
+                        console.log("\n========== Duplicate Key (Email) =========");
                         result = {redirect:'regform.html', msg:result.msg, user:''};
                     }
                     else {
@@ -40,25 +40,6 @@ var addBlogger = function (req, res, callback) {
             }
         });
     }
-    
-    /*else {
-        var userid   = (1e4*(Date.now()+Math.random())).toString(16);
-        
-        details._id  = userid; //add id to details
-        console.log(details);
-        
-        db.saveUser(details, function(result) {
-            console.log("\n========== Duplicate Key (Email) =========");
-            if(result.err==true){
-                result = {redirect:'regform.html', msg:result.msg, user:''};
-            }
-            else {
-                console.log("\n========== Successful Insert =========");
-                result = {redirect:'result.html', msg:"Successfully created your account!", user:result.first_name};
-            }
-            callback(result);
-        });
-    }*/
 }
 
 var logBlogger = function (req, res, callback) {
@@ -94,26 +75,27 @@ var logBlogger = function (req, res, callback) {
 
 var editBlogger = function(req, res, callback) {
     var params = req.query;
-        var query = {_id:req.params.id}; //user id
-        console.log("\n===== SETTING VALUES FOR PARAMS =====\n");
-        console.log(params);
-        var sesh = req.session;
-        sesh._id        = req.params.id;
-        sesh.first_name = params.first_name;
-        sesh.last_name  = params.last_name;
-        sesh.email      = params.email;
-        sesh.password   = params.password;
-        console.log("\n===== SETTING NEW VALUES FOR SESSION =====\n");
-        console.log(sesh);
-        
-        db.updateUser(query, params, function(result){
-        if(result.err==true) {
-            console.log(result.msg);
-        }
-        else {
-            console.log(result.msg);
-            callback(result.msg);
-        }
+    var query = {_id:req.params.id}; //user id
+    console.log("\n===== SETTING VALUES FOR PARAMS =====\n");
+    console.log(params);
+    
+    var sesh = req.session;
+    sesh._id        = req.params.id;
+    sesh.first_name = params.first_name;
+    sesh.last_name  = params.last_name;
+    sesh.email      = params.email;
+    sesh.password   = params.password;
+    console.log("\n===== SETTING NEW VALUES FOR SESSION =====\n");
+    console.log(sesh);
+    
+    db.updateUser(query, params, function(result){
+    if(result.err==true) {
+        console.log(result.msg);
+    }
+    else {
+        console.log(result.msg);
+        callback(result.msg);
+    }
     });
 }
 

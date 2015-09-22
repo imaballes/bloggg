@@ -11,7 +11,7 @@ require('./routes/static')(app);
 app.set('views',__dirname + '/views');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
-app.use(express.static('static'));
+app.use(express.static(__dirname + '/public/images'));
 
 // ========== BINDER
 app.listen(8008, function(result){

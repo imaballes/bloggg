@@ -17,7 +17,7 @@ module.exports = function(app) {
     });
     
     /* ==================================================
-        ** LOGIN
+        GET: LOGIN
         set session
         check existence of session (email)
         if existing: redirect to homepage
@@ -35,6 +35,7 @@ module.exports = function(app) {
     });
     
     /* ==================================================  
+        POST: LOGIN
         check existence of email and pw on database
         if existing: set session for user's email
         if !existing: err msg = "Email not found, sign-up to start blogging!"
@@ -78,7 +79,7 @@ module.exports = function(app) {
     });
     
     /* ==================================================
-        ** DASHBOARD (VIEW ALL POSTS)
+        GET: DASHBOARD (VIEW ALL POSTS)
         set session
         check existence of session (email)
         if existing: redirect to homepage
@@ -143,7 +144,7 @@ module.exports = function(app) {
     });
     
     /* ==================================================
-        ** LOGOUT
+        GET: LOGOUT
         set session
         check existence of session (email)
         if existing: destroy user's session (email) - redirect to login page
@@ -152,7 +153,6 @@ module.exports = function(app) {
     app.get('/logout', function(req, res) {
         console.log("========= Logging out =========");
         sesh = req.session; 
-        
         if(sesh.email) {
             req.session.destroy(function(err) {
                 if(err) {

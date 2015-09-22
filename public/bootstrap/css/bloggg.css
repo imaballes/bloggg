@@ -1,4 +1,8 @@
 /* DEFAULTS */
+* {
+    box-sizing: border-box;
+}
+
 body {
     padding:0px;
     margin:0 auto !important;
@@ -17,9 +21,11 @@ a:hover {
     text-align:center;
     color:blue;
 }
- ul {
-    margin: 0px;
- }
+
+ul {
+margin: 0px;
+}
+
 button {
     text-decoration:none;
     padding:10px;
@@ -40,18 +46,6 @@ button:hover {
     color:#2A897B;
 }
 
-.savebutton, .cancelbutton {
-    text-decoration:none;
-    padding:10px;
-    background-color: #2A897B;
-    color:#fff;
-    text-align:center;
-    border: 1px solid #fff;
-    width:100px;
-    font-size:16px;
-    border-radius:5px
-}
-
 p {
     width:400px;
     text-align:justify;
@@ -64,9 +58,14 @@ label {
     font-family: 'Ropa Sans', sans-serif;
 }
 
+form {
+    margin:5px;
+}
+
 /* CLASSES */
 .container {
     width:auto;
+    height:100%;
     background-color:#ffffff;
     padding:15px;
     background-image: url("/back.png");
@@ -103,9 +102,21 @@ label {
 }
 
 .hero-unit{
-    position:relative;
+    position:static;
     margin:auto;
-    width:400px;
+    max-width:400px;
+}
+
+.savebutton, .cancelbutton {
+    text-decoration:none;
+    padding:10px;
+    background-color: #2A897B;
+    color:#fff;
+    text-align:center;
+    border: 1px solid #fff;
+    width:100px;
+    font-size:16px;
+    border-radius:5px
 }
 
 .btn {
@@ -133,17 +144,21 @@ label {
 .post_container {
     position:relative;
     margin:auto;
-    width:630px;
+    min-width:300px;
+    max-width:630px;
     font-family: 'Bitter', serif;
+    word-wrap:break-word;
 }
 
 .span6 {
     background-color: #eee;
     padding:15px;
     border-radius:5px;
-    margin:10px 5px 3px 0px;
-    width:600px;    
+    margin:10px 5px;
+    width:600px;
+    position:relative;
 }
+
 .editbutton, .deletebutton {
     text-decoration:none;
     padding:3px;
@@ -172,8 +187,9 @@ label {
     text-align:center;
     background-color:#2A897B;
     color:#fff;
-    margin-bottom:10px;
-    position:relative;
+    position:static;
+    bottom:0px;
+    width:100%;
 }
 
 /* IDS */
@@ -275,20 +291,21 @@ label {
     text-align:justify;
 }
 
-#interact {
+.interact {
     font-size:10px;
     text-align:right;
     list-style-type:none;
-    width:630px;
+    min-width:auto;
+    max-width:630px;
 }
 
-#interact li {
+.interact li {
     text-decoration:none; 
     //color:#5b3c70;
     display:inline-block;
 }
 
-#interact li a {
+.interact li a {
     text-decoration:none;
     padding:5px;
     color:#2A897B;
@@ -296,7 +313,7 @@ label {
     display:list-item;
 }
 
-#interact li a:hover{
+.interact li a:hover{
     color:#fff;
     background-color:#2A897B;
 }
